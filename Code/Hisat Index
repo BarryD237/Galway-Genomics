@@ -1,0 +1,46 @@
+#################################
+#################################
+
+wget ftp://ftp.ccb.jhu.edu/pub/infphilo/hisat2/data/grch38_tran.tar.gz
+
+Downloads the grch38_tran directory from the Hisat website. '_tran' denotes ENSEMBL build. 
+
+|-grch38_tran
+   |
+   |---genome_tran.1.ht2
+   |---genome_tran.2.ht2
+   |---genome_tran.3.ht2
+   |---genome_tran.4.ht2
+   |---genome_tran.5.ht2
+   |---genome_tran.6.ht2
+   |---genome_tran.7.ht2
+   |---genome_tran.8.ht2
+   
+GTF and FASTA GRCH38 files were downloaded from ENSEMBL. This should ensure consistent annotation.
+
+#################################
+#################################
+
+prepare list of trimmmed FASTQ files:
+
+H84WTCtrl_S1_R1_001_pair.fastq  H84WTCtrl_S1_R2_001_pair.fastq  
+H85WTCtrl_S2_R1_001_pair.fastq  H85WTCtrl_S2_R2_001_pair.fastq
+H86WTCtrl_S3_R1_001_pair.fastq  H86WTCtrl_S3_R2_001_pair.fastq
+H84WTCYTO_S4_R1_001_pair.fastq  H84WTCYTO_S4_R2_001_pair.fastq
+H85WTCYTO_S5_R1_001_pair.fastq  H85WTCYTO_S5_R2_001_pair.fastq
+etc..
+
+#################################
+#################################
+
+while read x y; do
+
+    base=${x:0:13}
+    
+    hisat2 -p 8 -dta -x ./grch38_tran/genome_tran -1 $x -2 $y -S ./SAM/"${base}".sam
+    
+ done < list.txt
+
+
+#################################
+#################################
