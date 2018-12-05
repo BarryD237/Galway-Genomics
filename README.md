@@ -16,3 +16,11 @@ Again, Fold Change is in relation to WT
 
 log2FC == posiitve numbers indiciate upregulation in WT
           negative numbers indicate upregulation in S2+ 
+
+## Log2FC Explained:
+Take CYTO_0.1_Padj.csv as an example:\
+Gene : AL162258.1 Log2FC : 4.5028496338372\
+
+log2(4.5028496338372) = 2.1708383017660506 FOLD CHANGE\
+
+Thus, AL162258.1 is upregulated 217% more in WT. 
