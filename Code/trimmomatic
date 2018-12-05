@@ -1,0 +1,19 @@
+For trimming reads I decided to apply a 
+greedy approach; sliding window score = 8:20.
+
+module load jdk 
+
+while read x y; do
+
+        base1=$(basename $x .fastq)
+        base2=$(basename $y .fastq)
+
+        echo "${base1}" "${base2}"
+
+        java -jar ../../HNSCC/packages/trimmomatic-0.36.jar PE -threads 8 /
+        -trimlog "${base1}".log $x $y /
+        "${base1}"_pair.fastq "${base1}"_unpair.fastq /
+        "${base2}"_pair.fastq "${base2}"_unpair.fastq /
+        TRAILING:10 SLIDINGWINDOW:8:20 MINLEN:50
+
+done < trimlist.txt
