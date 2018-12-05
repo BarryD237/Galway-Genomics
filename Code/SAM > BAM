@@ -1,0 +1,34 @@
+Convert Hisat2 sam files to bam, sort. 
+
+for f in *.sam; do 
+
+    bam=${f/.sam/.bam}
+
+    samtools view -Sb $f $bam
+    
+done
+
+I ran samtools sort in the same for loop, 
+calling samtools view -H <file_sort.bam>
+showed that they were not sorted. 
+
+Decided to use picard instead.
+
+picard=/home/pilib/picard-2.8.2.jar
+
+for b in *.bam; do
+
+        base=$(basename $b .bam)
+
+        java -Xms10g -Xmx20g -Djava.io.tmpdir=tmp -jar /
+        $picard SortSam INPUT=$b OUTPUT="${base}"picard_sort.bam SORT_ORDER=coordinate
+
+done
+
+samtools view -H H84WTCtrl_S1picard_sort.bam 
+
+@HD	VN:1.5	SO:coordinate
+@SQ	SN:1	LN:248956422
+@SQ	SN:10	LN:133797422
+
+worked, unlike samtools. 
